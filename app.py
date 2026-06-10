@@ -20,6 +20,9 @@ training_sentences = [
     "The toilet flusher on the third floor block C is stuck",
     "Timetable scheduling conflicts with my core academic courses",
     "Wi-Fi connection is down in the residential college building"
+    "My tuition fee payment went through but my student portal still says unpaid",
+    "The bursary office hasn't updated my scholarship status on the system",
+    "I need to submit a formal request for a double payment refund"
 ]
 
 training_labels = [
@@ -32,6 +35,9 @@ training_labels = [
     "Facility",       # Toilet broken
     "Academic",       # Timetables
     "Facility"        # Wi-Fi down
+    "Administrative", # Tuition payment status
+    "Administrative", # Bursary scholarship status
+    "Administrative"  # Double payment refund
 ]
 
 # 🧠 Train the Naive Bayes Engine immediately when the server starts
