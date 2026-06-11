@@ -8,11 +8,10 @@ from sklearn.pipeline import make_pipeline
 app = Flask(__name__)
 CORS(app)
 
-# 📚 Expanded High-Density Training Dataset
-training_sentences = [
-    # =========================================================================
-    # --- CATEGORY 1: FACILITY SAMPLES (62 Total) -----------------------------
-    # =========================================================================
+# =========================================================================
+# --- CATEGORY 1: FACILITY SAMPLES ----------------------------------------
+# =========================================================================
+facility_sentences = [
     "The air conditioner in classroom 4B is broken and leaking water",
     "There are no lights working in the campus parking lot at night",
     "The toilet flusher on the third floor block C is stuck",
@@ -75,11 +74,13 @@ training_sentences = [
     "The washing machine unit number 3 inside the laundry room is leaking soapy water",
     "The computer lab emergency fire alarm bell is hanging off its wire harness",
     "Fire extinguisher unit bracket has broken and the canister is rolling on the floor",
-    "The pathway concrete tiles have cracked due to growing tree root pressure underneath",
+    "The pathway concrete tiles have cracked due to growing tree root pressure underneath"
+]
 
-    # =========================================================================
-    # --- CATEGORY 2: ACADEMIC SAMPLES (Original 23 + 40 Targeted Additions = 63 Total)
-    # =========================================================================
+# =========================================================================
+# --- CATEGORY 2: ACADEMIC SAMPLES ----------------------------------------
+# =========================================================================
+academic_sentences = [
     "Professor did not show up to the lecture hall today",
     "I need to appeal my final exam marks for computer science",
     "Timetable scheduling conflicts with my core academic courses",
@@ -103,8 +104,6 @@ training_sentences = [
     "My name is missing from the official registered student list for math class",
     "I need an official recommendation letter signed by the academic dean office",
     "The faculty board has not announced the rescheduled final presentation date",
-    
-    # 🚨 TARGETED ACADEMIC ANCHOR INJECTIONS FOR RE-WEIGHTING 🚨
     "I need to submit an official exam paper grading appeal because my total marks were miscalculated",
     "The final exam schedule lists two core academic exams at the exact same hour on Monday morning",
     "The mid semester exam question sheet contained multiple formatting errors that made questions unreadable",
@@ -144,11 +143,13 @@ training_sentences = [
     "The final course presentation list completely excludes our project group number from the roster schedule",
     "The textbook requirements list a course edition that is completely out of print and unavailable to buy",
     "The digital learning library database is missing the supplementary reading chapters for the final exam block",
-    "My academic grades achieved during my exchange semester abroad have not been integrated into my profile",
+    "My academic grades achieved during my exchange semester abroad have not been integrated into my profile"
+]
 
-    # =========================================================================
-    # --- CATEGORY 3: ADMINISTRATIVE SAMPLES (67 Total) -----------------------
-    # =========================================================================
+# =========================================================================
+# --- CATEGORY 3: ADMINISTRATIVE SAMPLES ----------------------------------
+# =========================================================================
+administrative_sentences = [
     "The registration fee payment gateway keeps failing during checkout",
     "The scholarship application submission portal is closed early",
     "My tuition fee payment went through but my student portal still says unpaid",
@@ -218,18 +219,22 @@ training_sentences = [
     "I need to clear an administrative block on my account that was placed there by mistake"
 ]
 
-# 🏷️ Clean Symmetrical Array Blueprint Mapping (62 + 63 + 67 = 192 Items)
+# 🔗 Combine all datasets seamlessly
+training_sentences = facility_sentences + academic_sentences + administrative_sentences
+
+# 🏷️ Bulletproof Automatic Matching Logic
+# This completely eliminates manual typing mistakes by pulling the exact counts dynamically
 training_labels = (
-    ["facility"] * 62 +
-    ["academic"] * 63 +
-    ["administrative"] * 67
+    ["facility"] * len(facility_sentences) +
+    ["academic"] * len(academic_sentences) +
+    ["administrative"] * len(administrative_sentences)
 )
 
 # 🧠 Train the Naive Bayes Engine immediately when the server starts
-print("🤖 Training Master High-Density Naive Bayes Classification Model...")
+print(f"🤖 Training Model with {len(training_sentences)} sentences and {len(training_labels)} labels...")
 model = make_pipeline(CountVectorizer(), MultinomialNB())
 model.fit(training_sentences, training_labels)
-print(f"✅ Model trained successfully with {len(training_sentences)} active data points!")
+print("✅ Symmetrical Model trained successfully!")
 
 @app.route('/predict', methods=['POST'])
 def predict():
