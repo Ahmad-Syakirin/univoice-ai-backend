@@ -8,10 +8,10 @@ from sklearn.pipeline import make_pipeline
 app = Flask(__name__)
 CORS(app)
 
-# 📚 Massive High-Density Training Dataset (192 total samples)
+# 📚 Expanded High-Density Training Dataset
 training_sentences = [
     # =========================================================================
-    # --- CATEGORY 1: FACILITY SAMPLES (Original 22 + 40 New = 62 Total) ------
+    # --- CATEGORY 1: FACILITY SAMPLES (62 Total) -----------------------------
     # =========================================================================
     "The air conditioner in classroom 4B is broken and leaking water",
     "There are no lights working in the campus parking lot at night",
@@ -78,7 +78,7 @@ training_sentences = [
     "The pathway concrete tiles have cracked due to growing tree root pressure underneath",
 
     # =========================================================================
-    # --- CATEGORY 2: ACADEMIC SAMPLES (Original 23 + 40 New = 63 Total) ------
+    # --- CATEGORY 2: ACADEMIC SAMPLES (Original 23 + 40 Targeted Additions = 63 Total)
     # =========================================================================
     "Professor did not show up to the lecture hall today",
     "I need to appeal my final exam marks for computer science",
@@ -103,49 +103,51 @@ training_sentences = [
     "My name is missing from the official registered student list for math class",
     "I need an official recommendation letter signed by the academic dean office",
     "The faculty board has not announced the rescheduled final presentation date",
-    "The assignment submission slot on the student portal is completely locked down",
-    "Our group needs another week to finish the data collection for the research paper",
-    "Lecturer refuses to explain why I lost points on my lab experiment report",
-    "The final examination schedule shows two of my core subjects on the exact same morning",
-    "I cannot find the grading rubric anywhere for the essay we have to hand in next week",
-    "The online lecture link for our Friday morning virtual class is completely broken",
-    "My professor keeps canceling office hours and I can't get feedback on my thesis draft",
-    "The faculty has changed our core unit textbook without letting the students know beforehand",
-    "I attended every tutorial session but my grade book tracking says zero percent attendance",
-    "The prerequisite rule is blocking me from adding advanced data structures to my schedule",
-    "We have not been allocated a project supervisor yet even though the semester started weeks ago",
-    "The exam grading contains an obvious counting error where my totals were calculated wrong",
-    "I would like to drop my accounting minor elective and switch over to statistics",
-    "The faculty office hasn't updated our mid term test marks on the online board",
-    "The instructions provided for our physics laboratory assignment are completely contradictory",
-    "I need an academic transcript review because an exempted subject is still listed as incomplete",
-    "Our lecturer is reading straight from slides and refuses to answer questions during class",
-    "The dean hasn't approved my formal request to take extra credit hours this term",
-    "I missed the pop quiz because the notification was posted only ten minutes before class",
-    "The final presentation list is missing our group number entirely from the roster",
-    "I need a signed letter of recommendation from the department head for an internship",
-    "The course outline does not specify what format our final project should be submitted in",
-    "Our textbook requirements list an edition that is completely out of print and unavailable",
-    "The digital learning library is missing the supplementary reading chapters for block 3",
-    "The exam hall conditions were way too noisy because of construction work next door",
-    "My grades from my exchange semester abroad have not been adjusted into my profile yet",
-    "The academic calendar dates conflict with the religious holidays observed next month",
-    "I was marked absent because the attendance scanning machine failed to read my digital code",
-    "Our lecturer uploaded the wrong template which caused everyone to format their data incorrectly",
-    "The evaluation sheet doesn't break down how individual marks were weighted for the final score",
-    "I want to request a formal re evaluation of my end of year project presentation",
-    "The software engineering class assignment instructions are completely vague and missing steps",
-    "I need an urgent meeting with my course coordinator regarding my graduation status check",
-    "The lecture notes folder on the server is completely blank for the last three weeks",
-    "Our class rep told us the lecture was moved but the system shows no location update",
-    "The faculty board has delayed the announcement for our final project viva schedule",
-    "I want to appeal a plagiarism penalty because my work was correctly cited using APA style",
-    "The supplementary examination registration form is not available anywhere on our portal",
-    "Our tutor keeps changing the project criteria every single time we show them a draft",
-    "I cannot register for my final semester elective because the section capacity is full",
+    
+    # 🚨 TARGETED ACADEMIC ANCHOR INJECTIONS FOR RE-WEIGHTING 🚨
+    "I need to submit an official exam paper grading appeal because my total marks were miscalculated",
+    "The final exam schedule lists two core academic exams at the exact same hour on Monday morning",
+    "The mid semester exam question sheet contained multiple formatting errors that made questions unreadable",
+    "Requesting a formal re evaluation of my computer architecture final exam paper marks",
+    "The professor refuses to give any breakdown or feedback regarding our recent midterm exam grades",
+    "The final examination timetable clashes directly with my other core course presentation schedule",
+    "I was falsely marked absent during the accounting final exam even though I signed the attendance sheet",
+    "The online examination portal locked me out ten minutes before the scheduled submission deadline expired",
+    "I need an extension on my software engineering assignment because the professor altered the rubric late",
+    "The course outline syllabus does not match the actual topics covered in the weekly lectures",
+    "We have not been assigned our final year project supervisor yet despite classes starting weeks ago",
+    "The group project assessment rubric structure is completely vague and lacks clear marking parameters",
+    "Requesting a course deferment for the upcoming final exams due to documented medical emergency circumstances",
+    "The credit hour transfer validation processing for my prerequisite math exemptions is still delayed",
+    "The lecturer failed to provide the mandatory reference textbook reading list for this semester course",
+    "I am unable to view or access the recorded lecture videos on the university digital learning management system",
+    "The add drop course registration deadline conflicts directly with my mandatory academic advisor meeting slot",
+    "My student profile is entirely missing from the official registered student roster for the calculus class",
+    "I need an official recommendation letter signed by the academic dean for my internship application",
+    "The faculty academic board has still not released the rescheduled date for our deferred project presentations",
+    "The assignment submission slot on the student portal is completely locked down and won't accept files",
+    "Our group requires a brief deadline extension to complete the data collection for the research paper assignment",
+    "The lecturer refuses to explain why my lab report lost points during the final marking review",
+    "I want to change my current major elective course selection option before the engineering module closes",
+    "I cannot find the grading rubric framework anywhere for the essay task that is due next week",
+    "The virtual lecture room link for our Friday morning academic class is broken and inaccessible",
+    "The faculty altered our core module textbook requirements without informing any of the enrolled students",
+    "I attended every mandatory tutorial session but my grade book tracking displays zero percent progress",
+    "The prerequisite rule blocks me from adding advanced data structures to my current semester academic schedule",
+    "I would like to drop my accounting minor module and switch over to the statistics pathway option",
+    "The faculty office has failed to post our mid term quiz results on the public tracking board",
+    "The academic instructions provided for our physics laboratory assignment are completely contradictory",
+    "I need an academic transcript review because an exempted subject is still marked as unfulfilled",
+    "Our lecturer reads directly from the presentation slides and refuses to answer academic queries during class",
+    "The dean has not approved my official request to take extra credit hours this term",
+    "I missed the unannounced pop quiz because the notification went live only ten minutes before class started",
+    "The final course presentation list completely excludes our project group number from the roster schedule",
+    "The textbook requirements list a course edition that is completely out of print and unavailable to buy",
+    "The digital learning library database is missing the supplementary reading chapters for the final exam block",
+    "My academic grades achieved during my exchange semester abroad have not been integrated into my profile",
 
     # =========================================================================
-    # --- CATEGORY 3: ADMINISTRATIVE SAMPLES (Original 27 + 40 New = 67 Total) 
+    # --- CATEGORY 3: ADMINISTRATIVE SAMPLES (67 Total) -----------------------
     # =========================================================================
     "The registration fee payment gateway keeps failing during checkout",
     "The scholarship application submission portal is closed early",
@@ -216,7 +218,7 @@ training_sentences = [
     "I need to clear an administrative block on my account that was placed there by mistake"
 ]
 
-# 🏷️ Clean Categorical Array Blueprint mapping indexing symmetrically 1-to-1
+# 🏷️ Clean Symmetrical Array Blueprint Mapping (62 + 63 + 67 = 192 Items)
 training_labels = (
     ["facility"] * 62 +
     ["academic"] * 63 +
