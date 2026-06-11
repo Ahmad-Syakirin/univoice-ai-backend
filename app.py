@@ -8,7 +8,7 @@ from sklearn.pipeline import make_pipeline
 app = Flask(__name__)
 CORS(app)
 
-# 📚 Expanded High-Density Training Dataset (+20 items per category)
+# 📚 Expanded Training Dataset (with 40 new explicit Facility anchors)
 training_sentences = [
     # --- Original Base Dataset ---
     "The air conditioner in classroom 4B is broken and leaking water",
@@ -24,7 +24,7 @@ training_sentences = [
     "The bursary office hasn't updated my scholarship status on the system",
     "I need to submit a formal request for a double payment refund",
 
-    # --- Category 1: Facility Expansion (+20) ---
+    # --- Category 1: Facility Base Expansion ---
     "The wooden door handle is completely broken and snapped off the frame",
     "Glass window pane in hostel room 204 is cracked and dangerous",
     "Ceiling fan in the discussion room squeaks loudly and rotates too slowly",
@@ -46,7 +46,49 @@ training_sentences = [
     "Grass is overgrown and obstructing the pedestrian walking paths near blocks",
     "Window latch lock is broken and cannot be closed securely from inside",
 
-    # --- Category 2: Academic Expansion (+20) ---
+    # --- 🚨 CRITICAL MASS FACILITY INJECTION (+40 NEW TARGET SAMPLES) ---
+    "The door lock is jammed and I am locked out of my hostel room",
+    "The lock on the bathroom door is broken and cannot be secured",
+    "Front entrance main wooden door is sagging off its hinges and won't close",
+    "The classroom door knob keeps spinning completely loose and won't unlatch",
+    "Glass panels on the corridor emergency exit doors are completely shattered",
+    "The back door to the lecture theatre is squeaking incredibly loudly during use",
+    "Padlock on the sports equipment storage locker room is rusted shut",
+    "The main gate iron hinges are broken making it dangerous to pull open",
+    "Water is dripping constantly from the ceiling panel in the main hallway",
+    "Bathroom tap pipe is leaking a pool of water underneath the common basin",
+    "The water pressure in the residential shower blocks is way too low to use",
+    "Toilet bowl is completely blocked up and overflowing onto the tiles",
+    "The main drainage system outside the dining hall is clogged with leaves",
+    "Borehole water pump is making a loud grinding grinding sound and failing",
+    "Water heater in the hostel bathroom is completely dead and only shoots cold water",
+    "A major pipe link under the library foundation is cracked and shooting water",
+    "The main fuse box breaker keeps tripping every time we turn on lab equipment",
+    "Exposed electrical wires are hanging down from the broken hallway light fixture",
+    "Wall power sockets and plugs in study cubicle row B have no electricity",
+    "The presentation room backup generator is smoking and leaking oil engine fluid",
+    "Streetlights along the pathway between the block and library are completely dark",
+    "The exhaust ventilation extraction fan in the chemistry lab has burnt out",
+    "Electrical sparks fly whenever we attempt to plug something into the wall socket",
+    "The main internet server room air conditioning unit has failed and overheated",
+    "The ceiling plasterboard panels are soft sagging down and about to collapse",
+    "Cracks are beginning to open up along the concrete support beams of the balcony",
+    "Floor tiles are loose broken and lifting up in the high traffic walkway corridor",
+    "The window frame has warped from sun damage and cannot be shut tightly",
+    "The brick wall surrounding the campus perimeter has partly collapsed near the gate",
+    "The carpet in the auditorium is completely torn up and creating a tripping hazard",
+    "The library study desk chair backrest has completely snapped off from the metal base",
+    "The whiteboard mounting bracket has slipped out of the wall and is hanging crooked",
+    "Blinds on the classroom windows are jammed pulled sideways and cannot be adjusted",
+    "The projector mount is vibrating violently when the ceiling fan is switched on",
+    "The microwave appliance inside the student lounge area sparks and smokes when used",
+    "The cafeteria public refrigerator unit is no longer cold and food is spoiling",
+    "The washing machine unit number 3 inside the laundry room is leaking soapy water",
+    "The computer lab emergency fire alarm bell is hanging off its wire harness",
+    "Fire extinguisher unit bracket has broken and the canister is rolling on the floor",
+    "The pathway concrete tiles have cracked due to growing tree root pressure underneath",
+
+    # --- Category 2: Academic Expansion ---
     "The lecturer is uploaded the wrong assignment sheet template file on portal",
     "I haven't received my supervisor allocation list for my final year project",
     "The course outline syllabus document does not match the actual lecture path",
@@ -68,7 +110,7 @@ training_sentences = [
     "I need an official recommendation letter signed by the academic dean office",
     "The faculty board has not announced the rescheduled final presentation date",
 
-    # --- Category 3: Administrative Expansion (+20) ---
+    # --- Category 3: Administrative Expansion ---
     "Student ID smartcard printing machine is broken at the administrative desk",
     "My internal residential accommodation hostel allocation status is still processing",
     "The finance counter closed earlier than the posted working hours today",
@@ -96,17 +138,23 @@ training_labels = [
     "facility", "academic", "administrative", "facility", "academic", "administrative",
     "facility", "academic", "facility", "administrative", "administrative", "administrative",
 
-    # --- Facility Labels (+20) ---
+    # --- Facility Base Labels ---
     "facility", "facility", "facility", "facility", "facility", "facility", "facility",
     "facility", "facility", "facility", "facility", "facility", "facility", "facility",
     "facility", "facility", "facility", "facility", "facility", "facility",
 
-    # --- Academic Labels (+20) ---
+    # --- 🚨 INJECTED FACILITY TARGET LABELS (Exactly 40 Elements) ---
+    "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility",
+    "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility",
+    "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility",
+    "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility",
+
+    # --- Academic Labels ---
     "academic", "academic", "academic", "academic", "academic", "academic", "academic",
     "academic", "academic", "academic", "academic", "academic", "academic", "academic",
     "academic", "academic", "academic", "academic", "academic", "academic",
 
-    # --- Administrative Labels (+20) ---
+    # --- Administrative Labels ---
     "administrative", "administrative", "administrative", "administrative", "administrative",
     "administrative", "administrative", "administrative", "administrative", "administrative",
     "administrative", "administrative", "administrative", "administrative", "administrative",
@@ -132,7 +180,7 @@ def predict():
         return jsonify({
             'status': 'success',
             'category': str(predicted_class),  
-            'prediction': str(predicted_class)
+            'predicted_category': str(predicted_class) # Kept both for safety across variations
         })
         
     except Exception as e:
