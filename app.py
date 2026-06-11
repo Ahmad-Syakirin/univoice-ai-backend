@@ -8,23 +8,14 @@ from sklearn.pipeline import make_pipeline
 app = Flask(__name__)
 CORS(app)
 
-# 📚 Expanded Training Dataset (with 40 new explicit Facility anchors)
+# 📚 Massive High-Density Training Dataset (192 total samples)
 training_sentences = [
-    # --- Original Base Dataset ---
+    # =========================================================================
+    # --- CATEGORY 1: FACILITY SAMPLES (Original 22 + 40 New = 62 Total) ------
+    # =========================================================================
     "The air conditioner in classroom 4B is broken and leaking water",
-    "Professor did not show up to the lecture hall today",
-    "The registration fee payment gateway keeps failing during checkout",
     "There are no lights working in the campus parking lot at night",
-    "I need to appeal my final exam marks for computer science",
-    "The scholarship application submission portal is closed early",
     "The toilet flusher on the third floor block C is stuck",
-    "Timetable scheduling conflicts with my core academic courses",
-    "Wi-Fi connection is down in the residential college building",
-    "My tuition fee payment went through but my student portal still says unpaid",
-    "The bursary office hasn't updated my scholarship status on the system",
-    "I need to submit a formal request for a double payment refund",
-
-    # --- Category 1: Facility Base Expansion ---
     "The wooden door handle is completely broken and snapped off the frame",
     "Glass window pane in hostel room 204 is cracked and dangerous",
     "Ceiling fan in the discussion room squeaks loudly and rotates too slowly",
@@ -45,8 +36,6 @@ training_sentences = [
     "The main projection screen in auditorium hall A is jammed and won't roll down",
     "Grass is overgrown and obstructing the pedestrian walking paths near blocks",
     "Window latch lock is broken and cannot be closed securely from inside",
-
-    # --- 🚨 CRITICAL MASS FACILITY INJECTION (+40 NEW TARGET SAMPLES) ---
     "The door lock is jammed and I am locked out of my hostel room",
     "The lock on the bathroom door is broken and cannot be secured",
     "Front entrance main wooden door is sagging off its hinges and won't close",
@@ -88,7 +77,12 @@ training_sentences = [
     "Fire extinguisher unit bracket has broken and the canister is rolling on the floor",
     "The pathway concrete tiles have cracked due to growing tree root pressure underneath",
 
-    # --- Category 2: Academic Expansion ---
+    # =========================================================================
+    # --- CATEGORY 2: ACADEMIC SAMPLES (Original 23 + 40 New = 63 Total) ------
+    # =========================================================================
+    "Professor did not show up to the lecture hall today",
+    "I need to appeal my final exam marks for computer science",
+    "Timetable scheduling conflicts with my core academic courses",
     "The lecturer is uploaded the wrong assignment sheet template file on portal",
     "I haven't received my supervisor allocation list for my final year project",
     "The course outline syllabus document does not match the actual lecture path",
@@ -109,8 +103,55 @@ training_sentences = [
     "My name is missing from the official registered student list for math class",
     "I need an official recommendation letter signed by the academic dean office",
     "The faculty board has not announced the rescheduled final presentation date",
+    "The assignment submission slot on the student portal is completely locked down",
+    "Our group needs another week to finish the data collection for the research paper",
+    "Lecturer refuses to explain why I lost points on my lab experiment report",
+    "The final examination schedule shows two of my core subjects on the exact same morning",
+    "I cannot find the grading rubric anywhere for the essay we have to hand in next week",
+    "The online lecture link for our Friday morning virtual class is completely broken",
+    "My professor keeps canceling office hours and I can't get feedback on my thesis draft",
+    "The faculty has changed our core unit textbook without letting the students know beforehand",
+    "I attended every tutorial session but my grade book tracking says zero percent attendance",
+    "The prerequisite rule is blocking me from adding advanced data structures to my schedule",
+    "We have not been allocated a project supervisor yet even though the semester started weeks ago",
+    "The exam grading contains an obvious counting error where my totals were calculated wrong",
+    "I would like to drop my accounting minor elective and switch over to statistics",
+    "The faculty office hasn't updated our mid term test marks on the online board",
+    "The instructions provided for our physics laboratory assignment are completely contradictory",
+    "I need an academic transcript review because an exempted subject is still listed as incomplete",
+    "Our lecturer is reading straight from slides and refuses to answer questions during class",
+    "The dean hasn't approved my formal request to take extra credit hours this term",
+    "I missed the pop quiz because the notification was posted only ten minutes before class",
+    "The final presentation list is missing our group number entirely from the roster",
+    "I need a signed letter of recommendation from the department head for an internship",
+    "The course outline does not specify what format our final project should be submitted in",
+    "Our textbook requirements list an edition that is completely out of print and unavailable",
+    "The digital learning library is missing the supplementary reading chapters for block 3",
+    "The exam hall conditions were way too noisy because of construction work next door",
+    "My grades from my exchange semester abroad have not been adjusted into my profile yet",
+    "The academic calendar dates conflict with the religious holidays observed next month",
+    "I was marked absent because the attendance scanning machine failed to read my digital code",
+    "Our lecturer uploaded the wrong template which caused everyone to format their data incorrectly",
+    "The evaluation sheet doesn't break down how individual marks were weighted for the final score",
+    "I want to request a formal re evaluation of my end of year project presentation",
+    "The software engineering class assignment instructions are completely vague and missing steps",
+    "I need an urgent meeting with my course coordinator regarding my graduation status check",
+    "The lecture notes folder on the server is completely blank for the last three weeks",
+    "Our class rep told us the lecture was moved but the system shows no location update",
+    "The faculty board has delayed the announcement for our final project viva schedule",
+    "I want to appeal a plagiarism penalty because my work was correctly cited using APA style",
+    "The supplementary examination registration form is not available anywhere on our portal",
+    "Our tutor keeps changing the project criteria every single time we show them a draft",
+    "I cannot register for my final semester elective because the section capacity is full",
 
-    # --- Category 3: Administrative Expansion ---
+    # =========================================================================
+    # --- CATEGORY 3: ADMINISTRATIVE SAMPLES (Original 27 + 40 New = 67 Total) 
+    # =========================================================================
+    "The registration fee payment gateway keeps failing during checkout",
+    "The scholarship application submission portal is closed early",
+    "My tuition fee payment went through but my student portal still says unpaid",
+    "The bursary office hasn't updated my scholarship status on the system",
+    "I need to submit a formal request for a double payment refund",
     "Student ID smartcard printing machine is broken at the administrative desk",
     "My internal residential accommodation hostel allocation status is still processing",
     "The finance counter closed earlier than the posted working hours today",
@@ -130,39 +171,60 @@ training_sentences = [
     "I need to cancel my hostel room booking and request deposit refund tracking",
     "The digital document upload section for identity verification keeps failing to load",
     "The financial aid emergency loan processing unit hasn't replied to emails",
-    "Lost and found management center doesn't have an item tracking system ledger"
+    "Lost and found management center doesn't have an item tracking system ledger",
+    "My student account login token has expired and I cannot reset my profile password",
+    "The automated teller system at the student bank counter ate my smart registration card",
+    "I need to apply for a campus parking decal sticker for my new motorcycle",
+    "The bursary department added a late payment fine to my file even though I paid on time",
+    "I have been waiting over three weeks for the admin office to process my change of details",
+    "The online queue management system for counter services keeps dropping my ticket number",
+    "I need to request an official letter proving my enrollment status for insurance purposes",
+    "The international student help desk lost my passport copies for the clearance check",
+    "The refund processing portal tells me my banking information format is invalid when it isn't",
+    "I cannot pay my graduation fees because the online bill option is missing from my page",
+    "The front counter staff was incredibly dismissive when I went to ask about hostel keys",
+    "My student visa extension application has been stuck on level one verification for a month",
+    "The orientation package collection room was closed during its scheduled operating hours",
+    "I need a certified true copy of my foundation certificate from the central archives",
+    "The system won't let me sign up for campus housing even though I am a first year student",
+    "I need to update my emergency contact details but the data edit button is greyed out",
+    "The finance office is demanding a physical bank receipt when I already sent the transaction PDF",
+    "The student union ballot system allowed people to vote multiple times due to a software glitch",
+    "I was charged an extra amenity fee on my bill but I don't live in the main campus dorms",
+    "The digital verification link emailed to me keeps saying page expired whenever I open it",
+    "I need to file a formal dispute against a wrongful financial hold placed on my account",
+    "The helpdesk support team hasn't responded to my login trouble ticket in over five days",
+    "The administrative directory listing has the wrong office numbers for the welfare team",
+    "I cannot print out my library clearance certificate because of an unverified balance of zero",
+    "The scholarship department sent my payout check to the wrong residential mailing address",
+    "I need to cancel my meal plan subscription and get the balance credited back to my wallet",
+    "The portal keeps looping back to the login screen whenever I click on the payment button",
+    "The main registry desk refuses to accept my medical certificate document for fee waiver",
+    "I am trying to submit my health insurance declaration form but the file upload limit is too low",
+    "The locker rental signup system took my money but didn't assign me a locker unit number",
+    "My student profile shows the completely wrong national identity card number on the main page",
+    "The counter queue app does not send a notification when your turn is coming up next",
+    "I need to collect my original school certificates from the admissions filing vault room",
+    "The bursary office hasn't updated my sponsored account status so I can't register for classes",
+    "I am trying to officially withdraw from this semester but the digital drop form won't submit",
+    "The administration building information board has outdated application deadlines listed",
+    "I need an official statement from the finance team breaking down my outstanding fees balance",
+    "The campus shuttle bus pass registration system keeps rejecting my uploaded portrait photo",
+    "The student support counter has only one staff working during peak lunch hour rush timing",
+    "I paid my club registration fees but my name isn't appearing on the official society ledger",
+    "The portal gave me a success message for housing but I haven't received my room number assignment",
+    "I need to clear an administrative block on my account that was placed there by mistake"
 ]
 
-training_labels = [
-    # --- Base Labels ---
-    "facility", "academic", "administrative", "facility", "academic", "administrative",
-    "facility", "academic", "facility", "administrative", "administrative", "administrative",
-
-    # --- Facility Base Labels ---
-    "facility", "facility", "facility", "facility", "facility", "facility", "facility",
-    "facility", "facility", "facility", "facility", "facility", "facility", "facility",
-    "facility", "facility", "facility", "facility", "facility", "facility",
-
-    # --- 🚨 INJECTED FACILITY TARGET LABELS (Exactly 40 Elements) ---
-    "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility",
-    "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility",
-    "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility",
-    "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility", "facility",
-
-    # --- Academic Labels ---
-    "academic", "academic", "academic", "academic", "academic", "academic", "academic",
-    "academic", "academic", "academic", "academic", "academic", "academic", "academic",
-    "academic", "academic", "academic", "academic", "academic", "academic",
-
-    # --- Administrative Labels ---
-    "administrative", "administrative", "administrative", "administrative", "administrative",
-    "administrative", "administrative", "administrative", "administrative", "administrative",
-    "administrative", "administrative", "administrative", "administrative", "administrative",
-    "administrative", "administrative", "administrative", "administrative", "administrative"
-]
+# 🏷️ Clean Categorical Array Blueprint mapping indexing symmetrically 1-to-1
+training_labels = (
+    ["facility"] * 62 +
+    ["academic"] * 63 +
+    ["administrative"] * 67
+)
 
 # 🧠 Train the Naive Bayes Engine immediately when the server starts
-print("🤖 Training Expanded Naive Bayes Classification Model...")
+print("🤖 Training Master High-Density Naive Bayes Classification Model...")
 model = make_pipeline(CountVectorizer(), MultinomialNB())
 model.fit(training_sentences, training_labels)
 print(f"✅ Model trained successfully with {len(training_sentences)} active data points!")
@@ -180,7 +242,7 @@ def predict():
         return jsonify({
             'status': 'success',
             'category': str(predicted_class),  
-            'predicted_category': str(predicted_class) # Kept both for safety across variations
+            'predicted_category': str(predicted_class)
         })
         
     except Exception as e:
