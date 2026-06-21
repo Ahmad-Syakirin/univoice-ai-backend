@@ -100,7 +100,7 @@ academic_sentences = [
     "The credit hour transfer validation processing for my credit exemption is delayed",
     "Lecturer did not state the mandatory textbook edition list for current course",
     "I cannot access the recorded lecture videos on the learning system library",
-    "The deadline for drops and adds period is conflicting with my advisor meeting",
+    "The deadline for drops and adds period is conflicting with my academic advisor meeting",
     "My name is missing from the official registered student list for math class",
     "I need an official recommendation letter signed by the academic dean office",
     "The faculty board has not announced the rescheduled final presentation date",
@@ -143,7 +143,14 @@ academic_sentences = [
     "The final course presentation list completely excludes our project group number from the roster schedule",
     "The textbook requirements list a course edition that is completely out of print and unavailable to buy",
     "The digital learning library database is missing the supplementary reading chapters for the final exam block",
-    "My academic grades achieved during my exchange semester abroad have not been integrated into my profile"
+    "My academic grades achieved during my exchange semester abroad have not been integrated into my profile",
+
+    # 🪄 ADDED: Academic Portal context tokens to fix the cross routing bug
+    "The assignment rubric is missing from the student portal layout",
+    "My lecturer has not uploaded the assignment rubric on the student portal yet",
+    "Lecturer posted the wrong quiz configuration files on the course portal",
+    "The student portal is not showing my course evaluation syllabus or handouts",
+    "I cannot find the grading rubric structure anywhere on the student portal profile"
 ]
 
 # =========================================================================
@@ -223,7 +230,6 @@ administrative_sentences = [
 training_sentences = facility_sentences + academic_sentences + administrative_sentences
 
 # 🏷️ Bulletproof Automatic Matching Logic
-# This completely eliminates manual typing mistakes by pulling the exact counts dynamically
 training_labels = (
     ["facility"] * len(facility_sentences) +
     ["academic"] * len(academic_sentences) +
