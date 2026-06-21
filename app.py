@@ -150,7 +150,13 @@ academic_sentences = [
     "My lecturer has not uploaded the assignment rubric on the student portal yet",
     "Lecturer posted the wrong quiz configuration files on the course portal",
     "The student portal is not showing my course evaluation syllabus or handouts",
-    "I cannot find the grading rubric structure anywhere on the student portal profile"
+    "I cannot find the grading rubric structure anywhere on the student portal profile",
+
+    # 🪄 ADDED: Exam Timetable Clash fixes to learn course conflict strings
+    "There is an exam timetable clash for my core syllabus tracks",
+    "artificial intelligence and data mining clash in schedule",
+    "My core subject exam timetable layout contains a major scheduling clash",
+    "The syllabus module exam schedule lists two papers clashing at the same time"
 ]
 
 # =========================================================================
@@ -238,7 +244,9 @@ training_labels = (
 
 # 🧠 Train the Naive Bayes Engine immediately when the server starts
 print(f"🤖 Training Model with {len(training_sentences)} sentences and {len(training_labels)} labels...")
-model = make_pipeline(CountVectorizer(), MultinomialNB())
+
+# 🪄 FIXED: Injected stop_words='english' to filter out generic structural terms like "and", "in", "the"
+model = make_pipeline(CountVectorizer(stop_words='english'), MultinomialNB())
 model.fit(training_sentences, training_labels)
 print("✅ Symmetrical Model trained successfully!")
 
