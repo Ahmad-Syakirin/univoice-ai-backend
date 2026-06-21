@@ -1,4 +1,6 @@
 import os
+from datetime import datetime, timezone
+import zoneinfo
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from sklearn.feature_extraction.text import CountVectorizer
@@ -7,6 +9,12 @@ from sklearn.pipeline import make_pipeline
 
 app = Flask(__name__)
 CORS(app)
+
+# 🌐 Helper function to dynamically output correct Malaysia (+8) time strings
+def get_malaysia_time():
+    malaysia_tz = zoneinfo.ZoneInfo("Asia/Kuala_Lumpur")
+    now_in_malaysia = datetime.now(timezone.utc).astimezone(malaysia_tz)
+    return now_in_malaysia.strftime("%d/%m/%Y at %I:%M %p")
 
 # =========================================================================
 # --- CATEGORY 1: FACILITY SAMPLES ----------------------------------------
@@ -260,10 +268,14 @@ def predict():
         user_complaint = data['text']
         predicted_class = model.predict([user_complaint])[0]
         
+        # 🪄 FIXED: Outputs the clean localized date directly from the new helper function
+        formatted_time = get_malaysia_time()
+        
         return jsonify({
             'status': 'success',
             'category': str(predicted_class),  
-            'predicted_category': str(predicted_class)
+            'predicted_category': str(predicted_class),
+            'timestamp': formatted_time
         })
         
     except Exception as e:
