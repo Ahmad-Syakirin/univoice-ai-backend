@@ -164,7 +164,13 @@ academic_sentences = [
     "There is an exam timetable clash for my core syllabus tracks",
     "artificial intelligence and data mining clash in schedule",
     "My core subject exam timetable layout contains a major scheduling clash",
-    "The syllabus module exam schedule lists two papers clashing at the same time"
+    "The syllabus module exam schedule lists two papers clashing at the same time",
+    
+    # 🪄 OVERRIDE TUNING: Forcing structural weight adjustments for class conflicts
+    "timetable clash between artificial intelligence and data mining modules",
+    "clash in my academic course schedule for data mining and artificial intelligence",
+    "the exam schedule lists an academic timetable clash for mining classes",
+    "my course schedule has a direct timetable clash for artificial intelligence lectures"
 ]
 
 # =========================================================================
